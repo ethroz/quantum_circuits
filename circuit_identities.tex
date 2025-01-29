@@ -1,0 +1,243 @@
+% Document setup
+\documentclass[12pt, letterpaper]{article}
+\usepackage[total={7in, 10in}]{geometry}
+
+% Required for inserting images
+\usepackage{graphicx}
+
+% Required for scalable fonts
+\usepackage{lmodern}
+
+% Required for hyperlinks
+\usepackage{hyperref}
+
+% Required for good fractions
+\usepackage{xfrac}
+
+% Required for quantum circuits
+\usepackage{tikz}
+\usetikzlibrary{quantikz2}
+
+% Definitions
+\def\eq{\boldsymbol{=}}
+\def\Plus{\texttt{+}}
+\def\Minus{\texttt{-}}
+\def\minus{\text{-}}
+\def\PlusEq{\mathrel{\raisebox{0.19ex}{$\scriptstyle+$}}=}
+\def\MinusEq{\mathrel{\raisebox{0.19ex}{$\scriptstyle-$}}=}
+\def\ghostDagger{\ghost{Z^\dagger}}
+\def\ghostSqrt{\ghost{\sqrt{Z}}}
+\def\ghostSqrtDagger{\ghost{\sqrt{Z}^\dagger}}
+
+
+\begin{document}
+
+\title{Quantum Circuit Identities}
+\author{Ethan Rozee}
+\date{}
+\maketitle
+
+\begin{center}
+
+
+\bfseries{X using H and Z}
+\[
+\begin{quantikz}[column sep=0.2cm]
+&\targ{}&
+\end{quantikz}
+\eq
+\begin{quantikz}[column sep=0.2cm]
+&\gate{H}&\gate{Z}&\gate{H}&
+\end{quantikz}
+\]
+
+\bfseries{Reverse CNOT using H}
+\[
+\begin{quantikz}[column sep=0.2cm, row sep=0.2cm]
+&\targ{}  &\ghost{H} \\
+&\ctrl{-1}&\ghost{H}
+\end{quantikz}
+\eq
+\begin{quantikz}[column sep=0.2cm, row sep=0.2cm]
+&\gate{H}&\ctrl{1}&\gate{H}& \\
+&\gate{H}&\targ{} &\gate{H}&
+\end{quantikz}
+\]
+
+\bfseries{SWAP using CNOT}
+\[
+\begin{quantikz}[column sep=0.2cm, row sep=0.5cm]
+&&\swap{1}&& \\
+&&\targX{}&&
+\end{quantikz}
+\eq
+\begin{quantikz}[column sep=0.2cm, row sep=0.2cm]
+&\ctrl{1}&\targ{}  &\ctrl{1}& \\
+&\targ{} &\ctrl{-1}&\targ{} &
+\end{quantikz}
+\]
+
+\bfseries{Controlled Z Rotations with CNOT}
+\[
+\begin{quantikz}[column sep=0.2cm, row sep=0.2cm]
+&\ctrl{1}          &\ghostSqrt \\
+&\gate{\sqrt[n]{Z}}&\ghostSqrt
+\end{quantikz}
+\eq
+\begin{quantikz}[column sep=0.2cm, row sep=0.2cm]
+&\targ{}        &\gate{\sqrt[2n]{Z}}&\targ{}        & \\
+&\ctrl[open]{-1}&\gate{\sqrt[2n]{Z}}&\ctrl[open]{-1}&
+\end{quantikz}
+\]
+
+\bfseries{Removing a Control}
+\[
+\begin{quantikz}[column sep=0.2cm, row sep=0.1cm]
+&\qwbundle{n}&\ctrl{2}  &\ghostSqrtDagger \\
+&            &\control{}&\ghostSqrtDagger \\
+&            &\gate{U}  &\ghostSqrtDagger
+\end{quantikz}
+\eq
+\begin{quantikz}[column sep=0.2cm, row sep=0.1cm]
+&\qwbundle{n}&\ctrl{1}&                       &\ctrl{1}&               &\ctrl{2}       &\ghostSqrtDagger \\
+&            &\targ{} &\ctrl{1}               &\targ{} &\ctrl{1}       &               &\ghostSqrtDagger \\
+&            &        &\gate{\sqrt{U}^\dagger}&        &\gate{\sqrt{U}}&\gate{\sqrt{U}}&\ghostSqrtDagger
+\end{quantikz}
+\]
+
+\bfseries{Reducing Z-Axis Controls}
+\[
+\begin{quantikz}[column sep=0.2cm, row sep=0.1cm]
+&\qwbundle{n}&\ctrl{2}          &\ghostSqrtDagger \\
+&            &\control{}        &\ghostSqrtDagger \\
+&            &\gate{\sqrt[n]{Z}}&\ghostSqrtDagger
+\end{quantikz}
+\eq
+\begin{quantikz}[column sep=0.2cm, row sep=0.1cm]
+&\qwbundle{n}&\ctrl{2}  &                           &\ctrl{2}  &\ctrl{1}           &\ghostSqrtDagger \\
+&            &\control{}&                           &\control{}&\gate{\sqrt[2n]{Z}}&\ghostSqrtDagger \\
+&            &\targ{}   &\gate{\sqrt[2n]{Z}^\dagger}&\targ{}   &\gate{\sqrt[2n]{Z}}&\ghostSqrtDagger
+\end{quantikz}
+\]
+
+\bfseries{Clifford+T Toffoli}
+\[
+\begin{quantikz}[column sep=0.2cm, row sep=0.2cm]
+&        &        &                &\ctrl{2}&        &        &                &\ctrl{2}&                &\ctrl{1}&                &\ctrl{1}&\gate{T}&\ghostDagger \\
+&        &\ctrl{1}&                &        &        &\ctrl{1}&                &        &\gate{T^\dagger}&\targ{} &\gate{T^\dagger}&\targ{} &\gate{S}&\ghostDagger \\
+&\gate{H}&\targ{} &\gate{T^\dagger}&\targ{} &\gate{T}&\targ{} &\gate{T^\dagger}&\targ{} &\gate{T}        &\gate{H}&                &        &        &\ghostDagger
+\end{quantikz}
+\]
+
+\bfseries{Toffoli Depth=8}
+\[
+\begin{quantikz}[column sep=0.2cm, row sep=0.2cm]
+&\gate{T^\dagger}&\targ{}  &\gate{T}&\targ{}  &\gate{T^\dagger}&\targ{}  &\gate{T}        &\targ{}  & \\
+&\gate{T^\dagger}&         &\ctrl{1}&\ctrl{-1}&\ctrl{1}        &         &                &\ctrl{-1}& \\
+&\gate{H}        &\ctrl{-2}&\targ{} &\gate{T} &\targ{}         &\ctrl{-2}&\gate{T^\dagger}&\gate{H} &
+\end{quantikz}
+\]
+
+\bfseries{Toffoli T-Depth=3}
+\[
+\begin{quantikz}[column sep=0.2cm, row sep=0.2cm]
+&        &\gate{T}&\targ{}  &         &\ctrl{2}&                &\ctrl{1}&\gate{T^\dagger}&         &\ctrl{2}&\targ{}  &\ghostDagger \\
+&        &\gate{T}&\ctrl{-1}&\targ{}  &        &\gate{T^\dagger}&\targ{} &\gate{T^\dagger}&\targ{}  &        &\ctrl{-1}&\ghostDagger \\
+&\gate{H}&\gate{T}&         &\ctrl{-1}&\targ{} &                &        &\gate{T}        &\ctrl{-1}&\targ{} &\gate{H} &\ghostDagger
+\end{quantikz}
+\]
+
+\bfseries{Multi-Controlled Z as Increments and Phases}
+\[
+\begin{quantikz}[column sep=0.2cm, row sep=0.1cm]
+&\ctrl{3}       &\ghostSqrtDagger \\
+&\control{}     &\ghostSqrtDagger \\
+&\control{}     &\ghostSqrtDagger \\
+&\gate{\sqrt{Z}}&\ghostSqrtDagger
+\end{quantikz}
+\eq
+\begin{quantikz}[column sep=0.2cm, row sep=0.1cm]
+&\gate[4]{\Plus1}&                           &\gate[4]{\Minus1}&\gate{\sqrt[16]{Z}}&\ghostSqrtDagger \\
+&                &\gate{\sqrt[16]{Z}^\dagger}&                 &\gate{\sqrt[16]{Z}}&\ghostSqrtDagger \\
+&                &\gate{\sqrt[8]{Z}^\dagger} &                 &\gate{\sqrt[8]{Z}} &\ghostSqrtDagger \\
+&                &\gate{\sqrt[4]{Z}^\dagger} &                 &\gate{\sqrt[4]{Z}} &\ghostSqrtDagger
+\end{quantikz}
+\]
+
+\bfseries{Increment Decomposition}
+\[
+\begin{quantikz}[column sep=0.2cm, row sep=0.1cm]
+&\gate[4]{\Plus1}&\ghostSqrtDagger \\
+&                &\ghostSqrtDagger \\
+&                &\ghostSqrtDagger \\
+&                &\ghostSqrtDagger
+\end{quantikz}
+\eq
+\begin{quantikz}[column sep=0.2cm, row sep=0.1cm]
+&\ctrl{3}  &&\ctrl{2}  &&\ctrl{1}&&\targ{}&\ghostSqrtDagger \\
+&\control{}&&\control{}&&\targ{} &&       &\ghostSqrtDagger \\
+&\control{}&&\targ{}   &&        &&       &\ghostSqrtDagger \\
+&\targ{}   &&          &&        &&       &\ghostSqrtDagger
+\end{quantikz}
+\eq
+\begin{quantikz}[column sep=0.2cm, row sep=0.1cm]
+&               &                  &\ctrl{3}          &                          &                       &\targ{}&\ghostSqrtDagger \\
+&               &\ctrl{2}          &\targ{}           &\ctrl{2}                  &                       &       &\ghostSqrtDagger \\
+&\ctrl{1}       &\gate{\sqrt{X}}   &\gate{\sqrt{X}}   &\gate{\sqrt{X}^\dagger}   &\ctrl{1}               &       &\ghostSqrtDagger \\
+&\gate{\sqrt{X}}&\gate{\sqrt[4]{X}}&\gate{\sqrt[4]{X}}&\gate{\sqrt[4]{X}^\dagger}&\gate{\sqrt{X}^\dagger}&       &\ghostSqrtDagger
+\end{quantikz}
+\]
+
+\bfseries{Decrement Decomposition}
+\[
+\begin{quantikz}[column sep=0.2cm, row sep=0.1cm]
+&\gate[4]{\Minus1}&\ghostSqrtDagger \\
+&                 &\ghostSqrtDagger \\
+&                 &\ghostSqrtDagger \\
+&                 &\ghostSqrtDagger
+\end{quantikz}
+\eq
+\begin{quantikz}[column sep=0.2cm, row sep=0.1cm]
+&\targ{}&&\ctrl{1}&&\ctrl{2}  &&\ctrl{3}  &\ghostSqrtDagger \\
+&       &&\targ{} &&\control{}&&\control{}&\ghostSqrtDagger \\
+&       &&        &&\targ{}   &&\control{}&\ghostSqrtDagger \\
+&       &&        &&          &&\targ{}   &\ghostSqrtDagger
+\end{quantikz}
+\eq
+\begin{quantikz}[column sep=0.2cm, row sep=0.1cm]
+&\targ{}&               &                  &\ctrl{3}                  &                          &                       &\ghostSqrtDagger \\
+&       &               &\ctrl{2}          &\targ{}                   &\ctrl{2}                  &                       &\ghostSqrtDagger \\
+&       &\ctrl{1}       &\gate{\sqrt{X}}   &\gate{\sqrt{X}^\dagger}   &\gate{\sqrt{X}^\dagger}   &\ctrl{1}               &\ghostSqrtDagger \\
+&       &\gate{\sqrt{X}}&\gate{\sqrt[4]{X}}&\gate{\sqrt[4]{X}^\dagger}&\gate{\sqrt[4]{X}^\dagger}&\gate{\sqrt{X}^\dagger}&\ghostSqrtDagger
+\end{quantikz}
+\]
+
+\newpage
+
+\bfseries{4-bit QFT}
+\[
+\begin{quantikz}[column sep=0.2cm, row sep=0.2cm]
+\lstick{LSB}&\gate[4]{Rev.}&\gate{H}&\gate{Z^{\sfrac{1}{2}}}&        &\gate{Z^{\sfrac{1}{4}}}&        &\gate{Z^{\sfrac{1}{8}}}&        & \\
+            &              &        &\ctrl{-1}              &\gate{H}&\gate{Z^{\sfrac{1}{2}}}&        &\gate{Z^{\sfrac{1}{4}}}&        & \\
+            &              &        &                       &        &\ctrl{-2}              &\gate{H}&\gate{Z^{\sfrac{1}{2}}}&        & \\
+\lstick{MSB}&              &        &                       &        &                       &        &\ctrl{-3}              &\gate{H}&
+\end{quantikz}
+\]
+
+\bfseries{4-bit Catalytic QFT}
+\[
+\begin{quantikz}[column sep=0.2cm, row sep=0.2cm]
+\setwiretype{n} &        &                       &\lstick{LSB}&\setwiretype{q}&\gate[4]{Rev.}&\gate{H}&\gate{A}           &        &\gate[2]{A}        &        &\gate[3]{A}        &        & \\
+\setwiretype{n} &        &                       &            &\setwiretype{q}&              &        &\ctrl{5}\wire[u]{q}&\gate{H}&                   &        &                   &        & \\
+\setwiretype{n} &        &                       &            &\setwiretype{q}&              &        &                   &        &\ctrl{3}\wire[u]{q}&\gate{H}&                   &        & \\
+\setwiretype{n} &        &                       &\lstick{MSB}&\setwiretype{q}&              &        &                   &        &                   &        &\ctrl{1}\wire[u]{q}&\gate{H}& \\
+\lstick{\ket{0}}&\gate{H}&\gate{Z^{\sfrac{1}{8}}}&\ \ldots \  &               &              &        &                   &        &                   &        &\gate[4]{\Minus A} &        & \\
+\lstick{\ket{0}}&\gate{H}&\gate{Z^{\sfrac{1}{4}}}&\ \ldots \  &               &              &        &                   &        &\gate[3]{\Minus A} &        &                   &        & \\
+\lstick{\ket{0}}&\gate{H}&\gate{Z^{\sfrac{1}{2}}}&\ \ldots \  &               &              &        &\gate[2]{\Minus A} &        &                   &        &                   &        & \\
+\lstick{\ket{0}}&\gate{H}&\gate{Z}               &\ \ldots \  &               &              &        &                   &        &                   &        &                   &        &
+\end{quantikz}
+\]
+
+
+\end{center}
+\end{document}
