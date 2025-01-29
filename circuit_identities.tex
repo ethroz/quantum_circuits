@@ -1,6 +1,6 @@
 % Document setup
 \documentclass[12pt, letterpaper]{article}
-\usepackage[total={7in, 10in}]{geometry}
+\usepackage[total={7in, 8.5in}]{geometry}
 
 % Required for inserting images
 \usepackage{graphicx}
@@ -50,6 +50,7 @@
 &\gate{H}&\gate{Z}&\gate{H}&
 \end{quantikz}
 \]
+\vspace{0.2cm}
 
 \bfseries{Reverse CNOT using H}
 \[
@@ -63,6 +64,7 @@
 &\gate{H}&\targ{} &\gate{H}&
 \end{quantikz}
 \]
+\vspace{0.2cm}
 
 \bfseries{SWAP using CNOT}
 \[
@@ -76,6 +78,7 @@
 &\targ{} &\ctrl{-1}&\targ{} &
 \end{quantikz}
 \]
+\vspace{0.2cm}
 
 \bfseries{Controlled Z Rotations with CNOT}
 \[
@@ -89,6 +92,7 @@
 &\ctrl[open]{-1}&\gate{\sqrt[2n]{Z}}&\ctrl[open]{-1}&
 \end{quantikz}
 \]
+\vspace{0.2cm}
 
 \bfseries{Removing a Control}
 \[
@@ -104,6 +108,7 @@
 &            &        &\gate{\sqrt{U}^\dagger}&        &\gate{\sqrt{U}}&\gate{\sqrt{U}}&\ghostSqrtDagger
 \end{quantikz}
 \]
+\vspace{0.2cm}
 
 \bfseries{Reducing Z-Axis Controls}
 \[
@@ -119,6 +124,7 @@
 &            &\targ{}   &\gate{\sqrt[2n]{Z}^\dagger}&\targ{}   &\gate{\sqrt[2n]{Z}}&\ghostSqrtDagger
 \end{quantikz}
 \]
+\vspace{0.2cm}
 
 \bfseries{Clifford+T Toffoli}
 \[
@@ -128,6 +134,7 @@
 &\gate{H}&\targ{} &\gate{T^\dagger}&\targ{} &\gate{T}&\targ{} &\gate{T^\dagger}&\targ{} &\gate{T}        &\gate{H}&                &        &        &\ghostDagger
 \end{quantikz}
 \]
+\vspace{0.2cm}
 
 \bfseries{Toffoli Depth=8}
 \[
@@ -137,6 +144,7 @@
 &\gate{H}        &\ctrl{-2}&\targ{} &\gate{T} &\targ{}         &\ctrl{-2}&\gate{T^\dagger}&\gate{H} &
 \end{quantikz}
 \]
+\vspace{0.2cm}
 
 \bfseries{Toffoli T-Depth=3}
 \[
@@ -146,6 +154,7 @@
 &\gate{H}&\gate{T}&         &\ctrl{-1}&\targ{} &                &        &\gate{T}        &\ctrl{-1}&\targ{} &\gate{H} &\ghostDagger
 \end{quantikz}
 \]
+\vspace{0.2cm}
 
 \bfseries{Multi-Controlled Z as Increments and Phases}
 \[
@@ -163,6 +172,7 @@
 &                &\gate{\sqrt[4]{Z}^\dagger} &                 &\gate{\sqrt[4]{Z}} &\ghostSqrtDagger
 \end{quantikz}
 \]
+\vspace{0.2cm}
 
 \bfseries{Increment Decomposition}
 \[
@@ -187,6 +197,7 @@
 &\gate{\sqrt{X}}&\gate{\sqrt[4]{X}}&\gate{\sqrt[4]{X}}&\gate{\sqrt[4]{X}^\dagger}&\gate{\sqrt{X}^\dagger}&       &\ghostSqrtDagger
 \end{quantikz}
 \]
+\vspace{0.2cm}
 
 \bfseries{Decrement Decomposition}
 \[
@@ -211,6 +222,7 @@
 &       &\gate{\sqrt{X}}&\gate{\sqrt[4]{X}}&\gate{\sqrt[4]{X}^\dagger}&\gate{\sqrt[4]{X}^\dagger}&\gate{\sqrt{X}^\dagger}&\ghostSqrtDagger
 \end{quantikz}
 \]
+\vspace{0.2cm}
 
 \newpage
 
@@ -223,6 +235,7 @@
 \lstick{MSB}&              &        &                       &        &                       &        &\ctrl{-3}              &\gate{H}&
 \end{quantikz}
 \]
+\vspace{0.2cm}
 
 \bfseries{4-bit Catalytic QFT}
 \[
@@ -237,6 +250,7 @@
 \lstick{\ket{0}}&\gate{H}&\gate{Z}               &\ \ldots \  &               &              &        &                   &        &                   &        &                   &        &
 \end{quantikz}
 \]
+\vspace{0.2cm}
 
 
 \end{center}
