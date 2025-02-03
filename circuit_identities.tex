@@ -2,14 +2,8 @@
 \documentclass[12pt, letterpaper]{article}
 \usepackage[total={7in, 8.5in}]{geometry}
 
-% Required for inserting images
-\usepackage{graphicx}
-
 % Required for scalable fonts
 \usepackage{lmodern}
-
-% Required for hyperlinks
-\usepackage{hyperref}
 
 % Required for good fractions
 \usepackage{xfrac}
@@ -248,6 +242,21 @@
 \lstick{\ket{0}}&\gate{H}&\gate{Z^{\sfrac{1}{4}}}&\ \ldots \  &               &              &        &                   &        &\gate[3]{\Minus A} &        &                   &        & \\
 \lstick{\ket{0}}&\gate{H}&\gate{Z^{\sfrac{1}{2}}}&\ \ldots \  &               &              &        &\gate[2]{\Minus A} &        &                   &        &                   &        & \\
 \lstick{\ket{0}}&\gate{H}&\gate{Z}               &\ \ldots \  &               &              &        &                   &        &                   &        &                   &        &
+\end{quantikz}
+\]
+\vspace{0.2cm}
+
+\bfseries{Explicit 4-bit Catalytic QFT}
+\[
+\begin{quantikz}[column sep=0.1cm, row sep=0.2cm]
+\setwiretype{n} &        &                       &\lstick{LSB}&\setwiretype{q}&\gate[4]{Rev.}&\gate{H}&\ctrl{6}  &\ctrl{7}  &        &\ctrl{5}  &\ctrl{6}  &\ctrl{7}  &          &          &        &\ctrl{4}  &\ctrl{5}  &\ctrl{6}  &\ctrl{7}  &\ctrl{5}  &\ctrl{6}  &\ctrl{7}  &          &          &        & \\
+\setwiretype{n} &        &                       &            &\setwiretype{q}&              &        &\control{}&\control{}&\gate{H}&\control{}&\control{}&\control{}&\ctrl{5}  &\ctrl{6}  &        &\control{}&\control{}&\control{}&\control{}&\control{}&\control{}&\control{}&\ctrl{5}  &\ctrl{6}  &        & \\
+\setwiretype{n} &        &                       &            &\setwiretype{q}&              &        &          &          &        &          &          &          &\control{}&\control{}&\gate{H}&          &          &          &          &          &          &          &\control{}&\control{}&        & \\
+\setwiretype{n} &        &                       &\lstick{MSB}&\setwiretype{q}&              &        &          &          &        &          &          &          &          &          &        &          &          &          &          &          &          &          &          &          &\gate{H}& \\
+\lstick{\ket{0}}&\gate{H}&\gate{Z^{\sfrac{1}{8}}}&\ \ldots \  &               &              &        &          &          &        &          &          &          &          &          &        &\targ{}   &\control{}&\control{}&\control{}&          &          &          &          &          &        & \\
+\lstick{\ket{0}}&\gate{H}&\gate{Z^{\sfrac{1}{4}}}&\ \ldots \  &               &              &        &          &          &        &\targ{}   &\control{}&\control{}&          &          &        &          &\targ{}   &\control{}&\control{}&\targ{}   &\control{}&\control{}&          &          &        & \\
+\lstick{\ket{0}}&\gate{H}&\gate{Z^{\sfrac{1}{2}}}&\ \ldots \  &               &              &        &\targ{}   &\control{}&        &          &\targ{}   &\control{}&\targ{}   &\control{}&        &          &          &\targ{}   &\control{}&          &\targ{}   &\control{}&\targ{}   &\control{}&        & \\
+\lstick{\ket{0}}&\gate{H}&\gate{Z}               &\ \ldots \  &               &              &        &          &\targ{}   &        &          &          &\targ{}   &          &\targ{}   &        &          &          &          &\targ{}   &          &          &\targ{}   &          &\targ{}   &        &
 \end{quantikz}
 \]
 \vspace{0.2cm}
