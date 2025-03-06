@@ -1,1 +1,11 @@
-build
+*.aux
+*.blg
+*.fdb*
+*.fls
+*.log
+*.synctex*
+*.toc
+*.pdf
+*.dpth
+*.md5
+*.auxlock

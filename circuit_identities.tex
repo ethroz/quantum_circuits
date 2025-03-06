@@ -12,6 +12,10 @@
 \usepackage{tikz}
 \usetikzlibrary{quantikz2}
 
+% Externalize the quantum circuits for faster compilation
+\usetikzlibrary{external}
+\tikzexternalize[prefix=tikz/]
+
 % Definitions
 \def\eq{\boldsymbol{=}}
 \def\Plus{\texttt{+}}

@@ -1,15 +1,36 @@
 {
     "cSpell.words": [
         "auxdir",
+        "auxlock",
         "latexmk",
         "pdflatex",
         "synctex"
     ],
-    "latex-workshop.latex.external.build.command": "latexmk",
-    "latex-workshop.latex.external.build.args": [
-        "-pdf",
-        "-auxdir=build",
-        "-output-directory=\"G:/My Drive/School/Honours\""
-    ],
-    "latex-workshop.latex.outDir": "G:/My Drive/School/Honours"
+    "files.exclude": {
+        "**/*.aux*": true,
+        "*.blg": true,
+        "*.fdb*": true,
+        "*.fls": true,
+        "*.log": true,
+        "*.synctex*": true,
+        "*.toc": true,
+        "*.dpth": true,
+        "tikz": true
+    },
+    "latex-workshop.latex.tools": [
+        {
+            "name": "latexmk",
+            "command": "latexmk",
+            "args": [
+                "-shell-escape",
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-pdf",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ],
+            "env": {}
+        }
+    ]
 }
