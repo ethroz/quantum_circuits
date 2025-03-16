@@ -2,9 +2,23 @@
     "cSpell.words": [
         "auxdir",
         "auxlock",
+        "boldsymbol",
+        "etoolbox",
+        "ifstrempty",
+        "ifstrequal",
         "latexmk",
+        "lket",
+        "midstick",
+        "newcommand",
         "pdflatex",
-        "synctex"
+        "qwbundle",
+        "rket",
+        "setwiretype",
+        "sqrtt",
+        "synctex",
+        "texttt",
+        "usepackage",
+        "usetikzlibrary"
     ],
     "files.exclude": {
         "**/*.aux*": true,

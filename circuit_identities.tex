@@ -2,49 +2,7 @@
 \documentclass[12pt, letterpaper]{article}
 \usepackage[total={7in, 8.5in}]{geometry}
 
-% Required for better if statements
-\usepackage{xifthen}
-
-% Required for more better if statements
-\usepackage{etoolbox}
-
-% Required for quantum circuits
-\usepackage{tikz}
-\usetikzlibrary{quantikz2}
-
-% Definitions
-\newenvironment{circuit}
-{\begin{quantikz}[column sep=0.3cm, row sep=0.2cm]}
-{\end{quantikz}}
-\def\eq{\boldsymbol{=}}
-\def\Plus{\texttt{+}}
-\def\Minus{\texttt{-}}
-\newcommand{\sqrtt}[2][]{\ifstrequal{#1}{2}{\sqrt{#2}}{\sqrt[#1]{#2}}}
-
-% Gates
-\def\nwires{\qwbundle{n}}
-\def\nw{\setwiretype{n}}
-\def\qw{\setwiretype{q}}
-\def\qwu{\wire[u]{q}}
-\def\H{\gate{H}}
-\def\X{\targ{}}
-\def\Z{\gate{Z}}
-\def\S{\gate{S}}
-\newcommand{\C}[1]{\ifstrempty{#1}{\control{}}{\ctrl{#1}}}
-\def\T{\gate{T}}
-\def\Tdg{\gate{T^\dagger}}
-\def\phs#1#2{\gate{\sqrtt[#1]{#2}}}
-\def\phsDg#1#2{\gate{\sqrtt[#1]{#2}^\dagger}}
-\def\Inc#1{\gate[#1]{\Plus\Plus}}
-\def\Dec#1{\gate[#1]{\Minus\Minus}}
-\def\Rev#1{\gate[#1]{Rev.}}
-\def\MinusEq#1#2{\gate[#1]{\texttt{-=}#2}}
-\def\midEq#1{\midstick[#1,brackets=none]{$\eq$}}
-\def\Var#1#2{\gate[#1]{#2}\hphantom{\texttt{-=}}}
-\def\ghostDg{\ghost{Z^\dagger}}
-\def\ghostSqrt{\ghost{\sqrt{Z}}}
-\def\ghostSqrtDg{\ghost{\sqrt{Z}^\dagger}}
-
+\usepackage{./mydefs}
 
 \begin{document}
 
@@ -78,9 +36,9 @@
 
 \bfseries{Controlled Z Rotations with no controlled Z gates}
 \begin{equation*}\begin{circuit}
-&\C{1}     &\midEq3&\C{2}                          &          &\C{2}     &\ghost{Z} \\
-&\phs{n}{Z}&       &\C{}                           &          &\C{}      & \\
-&\nw       &       &\gate{iX}\lstick{\ket0\quad}\qw&\phs{n}{Z}&\gate{-iX}&\rstick{\ket0}
+&\C{1}     &\midEq3&\C{2}                  &          &\C{2}     &\ghost{Z} \\
+&\phs{n}{Z}&       &\C{}                   &          &\C{}      & \\
+&\nw       &       &\gate{iX}\lket0\quad\qw&\phs{n}{Z}&\gate{-iX}&\rket0
 \end{circuit}\end{equation*}
 \vspace{0.2cm}
 
@@ -164,27 +122,27 @@
 
 \bfseries{4-bit Catalytic QFT}
 \begin{equation*}\begin{circuit}
-             \nw&  &          &           &\lstick{LSB}&\Rev4\qw&\H&\Var{1}{A}    &  &\Var{2}{A}    &  &\Var{3}{A}    &  & \\
-             \nw&  &          &           &            &     \qw&  &\C{5}\qwu     &\H&              &  &              &  & \\
-             \nw&  &          &           &            &     \qw&  &              &  &\C{3}\qwu     &\H&              &  & \\
-             \nw&  &          &           &\lstick{MSB}&     \qw&  &              &  &              &  &\C{1}\qwu     &\H& \\
-\lstick{\ket{0}}&\H&\phs{8}{Z}&\ \ldots \ &            &        &  &              &  &              &  &\MinusEq{4}{A}&  & \\
-\lstick{\ket{0}}&\H&\phs{4}{Z}&\ \ldots \ &            &        &  &              &  &\MinusEq{3}{A}&  &              &  & \\
-\lstick{\ket{0}}&\H&\phs{2}{Z}&\ \ldots \ &            &        &  &\MinusEq{2}{A}&  &              &  &              &  & \\
-\lstick{\ket{0}}&\H&\Z        &\ \ldots \ &            &        &  &              &  &              &  &              &  &
+     \nw&  &          &           &\lstick{LSB}&\Rev4\qw&\H&\Var{1}{A}    &  &\Var{2}{A}    &  &\Var{3}{A}    &  & \\
+     \nw&  &          &           &            &     \qw&  &\C{5}         &\H&              &  &              &  & \\
+     \nw&  &          &           &            &     \qw&  &              &  &\C{3}         &\H&              &  & \\
+     \nw&  &          &           &\lstick{MSB}&     \qw&  &              &  &              &  &\C{1}         &\H& \\
+\lket{0}&\H&\phs{8}{Z}&\ \ldots \ &            &        &  &              &  &              &  &\MinusEq{4}{A}&  & \\
+\lket{0}&\H&\phs{4}{Z}&\ \ldots \ &            &        &  &              &  &\MinusEq{3}{A}&  &              &  & \\
+\lket{0}&\H&\phs{2}{Z}&\ \ldots \ &            &        &  &\MinusEq{2}{A}&  &              &  &              &  & \\
+\lket{0}&\H&\Z        &\ \ldots \ &            &        &  &              &  &              &  &              &  &
 \end{circuit}\end{equation*}
 \vspace{0.2cm}
 
 \bfseries{Explicit 4-bit Catalytic QFT}
 \begin{equation*}\begin{quantikz}[column sep=0.15cm, row sep=0.2cm]
-             \nw&  &          &           &\lstick{LSB}&\Rev4\qw&\H&\C{6}&\C{7}&  &     &     &\C{5}&\C{6}&\C{7}&  &     &     &     &     &     &\C{4}&\C{5}&\C{6}&\C{7}&  & \\
-             \nw&  &          &           &            &     \qw&  &\C{} &\C{} &\H&\C{5}&\C{6}&     &     &     &  &     &     &\C{4}&\C{5}&\C{6}&     &     &     &     &  & \\
-             \nw&  &          &           &            &     \qw&  &     &     &  &\C{} &\C{} &\C{} &\C{} &\C{} &\H&\C{4}&\C{5}&     &     &     &     &     &     &     &  & \\
-             \nw&  &          &           &\lstick{MSB}&     \qw&  &     &     &  &     &     &     &     &     &  &\C{} &\C{} &\C{} &\C{} &\C{} &\C{} &\C{} &\C{} &\C{} &\H& \\
-\lstick{\ket{0}}&\H&\phs{8}{Z}&\ \ldots \ &            &        &  &     &     &  &     &     &     &     &     &  &     &     &     &     &     &\X   &\C{} &\C{} &\C{} &  & \\
-\lstick{\ket{0}}&\H&\phs{4}{Z}&\ \ldots \ &            &        &  &     &     &  &     &     &\X   &\C{} &\C{} &  &     &     &\X   &\C{} &\C{} &     &\X   &\C{} &\C{} &  & \\
-\lstick{\ket{0}}&\H&\phs{2}{Z}&\ \ldots \ &            &        &  &\X   &\C{} &  &\X   &\C{} &     &\X   &\C{} &  &\X   &\C{} &     &\X   &\C{} &     &     &\X   &\C{} &  & \\
-\lstick{\ket{0}}&\H&\Z        &\ \ldots \ &            &        &  &     &\X   &  &     &\X   &     &     &\X   &  &     &\X   &     &     &\X   &     &     &     &\X   &  &
+     \nw&  &          &           &\lstick{LSB}&\Rev4\qw&\H&\C{6}&\C{7}&  &     &     &\C{5}&\C{6}&\C{7}&  &     &     &     &     &     &\C{4}&\C{5}&\C{6}&\C{7}&  & \\
+     \nw&  &          &           &            &     \qw&  &\C{} &\C{} &\H&\C{5}&\C{6}&     &     &     &  &     &     &\C{4}&\C{5}&\C{6}&     &     &     &     &  & \\
+     \nw&  &          &           &            &     \qw&  &     &     &  &\C{} &\C{} &\C{} &\C{} &\C{} &\H&\C{4}&\C{5}&     &     &     &     &     &     &     &  & \\
+     \nw&  &          &           &\lstick{MSB}&     \qw&  &     &     &  &     &     &     &     &     &  &\C{} &\C{} &\C{} &\C{} &\C{} &\C{} &\C{} &\C{} &\C{} &\H& \\
+\lket{0}&\H&\phs{8}{Z}&\ \ldots \ &            &        &  &     &     &  &     &     &     &     &     &  &     &     &     &     &     &\X   &\C{} &\C{} &\C{} &  & \\
+\lket{0}&\H&\phs{4}{Z}&\ \ldots \ &            &        &  &     &     &  &     &     &\X   &\C{} &\C{} &  &     &     &\X   &\C{} &\C{} &     &\X   &\C{} &\C{} &  & \\
+\lket{0}&\H&\phs{2}{Z}&\ \ldots \ &            &        &  &\X   &\C{} &  &\X   &\C{} &     &\X   &\C{} &  &\X   &\C{} &     &\X   &\C{} &     &     &\X   &\C{} &  & \\
+\lket{0}&\H&\Z        &\ \ldots \ &            &        &  &     &\X   &  &     &\X   &     &     &\X   &  &     &\X   &     &     &\X   &     &     &     &\X   &  &
 \end{quantikz}\end{equation*}
 \vspace{0.2cm}
 
